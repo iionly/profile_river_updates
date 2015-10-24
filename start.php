@@ -13,7 +13,13 @@ function profile_river_updates($event, $type, $object) {
 	if ($user instanceof ElggUser) {
 		$view = 'river/user/default/profileupdate';
 		elgg_delete_river(array('subject_guid' => $user->guid, 'view' => $view));
-		add_to_river($view, 'update', $user->guid, $user->guid, get_default_access($user));
+		elgg_create_river_item(array(
+			'view' => $view,
+			'action_type' => 'update',
+			'subject_guid' => $user->guid,
+			'object_guid' => $user->guid,
+			'access_id' => get_default_access($user),
+		));
 	}
 
 	return true;
