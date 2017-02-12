@@ -1,6 +1,12 @@
 Changelog
 =========
 
+2.3.0
+-----
+
+- Increased minimum required Elgg version to 2.3.0,
+- No longer use deprecated elgg_delete_river().
+
 1.9.0
 -----
 

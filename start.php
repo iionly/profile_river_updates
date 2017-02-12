@@ -12,7 +12,28 @@ function profile_river_updates($event, $type, $object) {
 
 	if ($user instanceof ElggUser) {
 		$view = 'river/user/default/profileupdate';
-		elgg_delete_river(array('subject_guid' => $user->guid, 'view' => $view));
+
+		// First delete any existing river entry about profile updates of this user
+		$access = elgg_set_ignore_access(true);
+		$access_status = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+
+		$river_items = new ElggBatch('elgg_get_river', array(
+			'view' => $view,
+			'action_type' => 'update',
+			'subject_guid' => $user->guid,
+			'limit' => false,
+		));
+
+		$river_items->setIncrementOffset(false);
+		foreach ($river_items as $river_item) {
+			$river_item->delete();
+		}
+
+		access_show_hidden_entities($access_status);
+		elgg_set_ignore_access($access);
+
+		// Then create new river entry informing about profile update of this user
 		elgg_create_river_item(array(
 			'view' => $view,
 			'action_type' => 'update',
