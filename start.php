@@ -11,7 +11,7 @@ function profile_river_updates($event, $type, $object) {
 	$user = get_entity($object->guid);
 
 	if ($user instanceof ElggUser) {
-		$view = 'river/user/default/profileupdate';
+		$view = "river/user/default/profileupdate";
 
 		// First delete any existing river entry about profile updates of this user
 		$access = elgg_set_ignore_access(true);
@@ -19,15 +19,15 @@ function profile_river_updates($event, $type, $object) {
 		access_show_hidden_entities(true);
 
 		$river_items = new ElggBatch('elgg_get_river', array(
-			'view' => $view,
 			'action_type' => 'update',
 			'subject_guid' => $user->guid,
 			'limit' => false,
+			'wheres' => array("rv.view = \"$view\""),
 		));
 
 		$river_items->setIncrementOffset(false);
 		foreach ($river_items as $river_item) {
-			$river_item->delete();
+ 			$river_item->delete();
 		}
 
 		access_show_hidden_entities($access_status);
