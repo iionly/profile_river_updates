@@ -6,7 +6,9 @@ function profile_river_updates_init() {
 	elgg_register_event_handler('profileupdate', 'user', 'profile_river_updates');
 }
 
-function profile_river_updates($event, $type, $user) {
+function profile_river_updates(\Elgg\Event $event) {
+	$user = $event->getObject();
+
 	if ($user instanceof ElggUser) {
 		$view = "river/user/default/profileupdate";
 
@@ -37,7 +39,6 @@ function profile_river_updates($event, $type, $user) {
 			'action_type' => 'update',
 			'subject_guid' => $user->guid,
 			'object_guid' => $user->guid,
-			'access_id' => get_default_access($user),
 		]);
 	}
 
