@@ -1,7 +1,7 @@
-Profile River Updates plugin for Elgg 3.3 and newer Elgg 3.X
+Profile River Updates plugin for Elgg 4.0 and newer Elgg 4.X
 ============================================================
 
-Version: 3.3.0  
+Version: 4.0.0  
 Released: 2022-05-22  
 Contact: iionly@gmx.de  
 License: GNU General Public License version 2  
